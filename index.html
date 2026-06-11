@@ -11,13 +11,18 @@
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --violet-deep: #08061A;
-            --violet-dark: #0F0C27;
-            --violet-mid: #1A1540;
-            --violet-primary: #7C3AED;
+            --white: #FFFFFF;
+            --cream: #FEFDFB;
+            --gray-50: #F9FAFB;
+            --gray-100: #F3F4F6;
+            --gray-600: #4B5563;
+            --gray-700: #374151;
+            --gray-900: #111827;
+            --violet: #7C3AED;
+            --violet-dark: #6D28D9;
             --violet-light: #A78BFA;
             --gold: #F59E0B;
-            --gold-light: #FCD34D;
+            --gold-dark: #D97706;
         }
 
         * {
@@ -28,45 +33,9 @@
 
         body {
             font-family: 'Outfit', sans-serif;
-            background: var(--violet-deep);
-            color: #FFFFFF;
+            background: var(--white);
+            color: var(--gray-900);
             overflow-x: hidden;
-            position: relative;
-        }
-
-        /* Atmospheric background */
-        body::before {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background:
-                radial-gradient(circle at 20% 20%, rgba(124, 58, 237, 0.15) 0%, transparent 50%),
-                radial-gradient(circle at 80% 80%, rgba(245, 158, 11, 0.1) 0%, transparent 50%),
-                radial-gradient(circle at 50% 50%, rgba(167, 139, 250, 0.05) 0%, transparent 70%);
-            pointer-events: none;
-            z-index: 0;
-        }
-
-        /* Noise texture */
-        body::after {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            opacity: 0.03;
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='3' numOctaves='4' /%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' /%3E%3C/svg%3E");
-            pointer-events: none;
-            z-index: 1;
-        }
-
-        .content-wrapper {
-            position: relative;
-            z-index: 2;
         }
 
         /* Header */
@@ -75,23 +44,17 @@
             top: 0;
             left: 0;
             right: 0;
-            padding: 24px 0;
+            padding: 20px 0;
+            background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(20px);
-            background: rgba(8, 6, 26, 0.8);
-            border-bottom: 1px solid rgba(124, 58, 237, 0.1);
+            border-bottom: 1px solid var(--gray-100);
             z-index: 100;
             animation: slideDown 0.6s ease-out;
         }
 
         @keyframes slideDown {
-            from {
-                transform: translateY(-100%);
-                opacity: 0;
-            }
-            to {
-                transform: translateY(0);
-                opacity: 1;
-            }
+            from { transform: translateY(-100%); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
         }
 
         .header-container {
@@ -105,17 +68,15 @@
 
         .logo-img {
             height: 40px;
-            filter: drop-shadow(0 0 20px rgba(124, 58, 237, 0.4));
             transition: all 0.3s ease;
         }
 
         .logo-img:hover {
-            filter: drop-shadow(0 0 30px rgba(124, 58, 237, 0.6));
             transform: scale(1.05);
         }
 
         nav a {
-            color: rgba(255, 255, 255, 0.7);
+            color: var(--gray-700);
             text-decoration: none;
             font-weight: 600;
             font-size: 15px;
@@ -124,7 +85,7 @@
         }
 
         nav a:hover {
-            color: var(--gold);
+            color: var(--violet);
         }
 
         /* Hero Section */
@@ -132,8 +93,8 @@
             min-height: 100vh;
             display: flex;
             align-items: center;
-            position: relative;
             padding: 120px 48px 80px;
+            background: linear-gradient(135deg, var(--cream) 0%, var(--white) 50%, #FAF5FF 100%);
         }
 
         .hero-grid {
@@ -150,38 +111,22 @@
         }
 
         @keyframes fadeInLeft {
-            from {
-                opacity: 0;
-                transform: translateX(-40px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
+            from { opacity: 0; transform: translateX(-40px); }
+            to { opacity: 1; transform: translateX(0); }
         }
 
         .hero-badge {
             display: inline-block;
-            background: linear-gradient(135deg, rgba(245, 158, 11, 0.15) 0%, rgba(124, 58, 237, 0.15) 100%);
-            border: 1px solid rgba(245, 158, 11, 0.3);
+            background: linear-gradient(135deg, rgba(124, 58, 237, 0.1) 0%, rgba(245, 158, 11, 0.1) 100%);
+            border: 1.5px solid var(--violet-light);
             border-radius: 100px;
             padding: 10px 24px;
             font-size: 13px;
             font-weight: 700;
             letter-spacing: 2px;
             text-transform: uppercase;
-            color: var(--gold-light);
+            color: var(--violet-dark);
             margin-bottom: 32px;
-            animation: pulse 3s ease-in-out infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% {
-                box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.4);
-            }
-            50% {
-                box-shadow: 0 0 0 10px rgba(245, 158, 11, 0);
-            }
         }
 
         .hero h1 {
@@ -191,7 +136,7 @@
             line-height: 0.95;
             letter-spacing: -3px;
             margin-bottom: 32px;
-            background: linear-gradient(135deg, #FFFFFF 0%, var(--violet-light) 50%, var(--gold-light) 100%);
+            background: linear-gradient(135deg, var(--gray-900) 0%, var(--violet-dark) 50%, var(--gold-dark) 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -200,13 +145,13 @@
         .hero-subtitle {
             font-size: 20px;
             font-weight: 500;
-            color: rgba(255, 255, 255, 0.8);
+            color: var(--gray-600);
             line-height: 1.7;
             margin-bottom: 48px;
             max-width: 540px;
         }
 
-        /* Email Signup */
+        /* Email Form */
         .email-form {
             display: flex;
             gap: 16px;
@@ -217,52 +162,50 @@
         .email-input {
             flex: 1;
             padding: 20px 28px;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(167, 139, 250, 0.2);
+            background: var(--white);
+            border: 2px solid var(--gray-100);
             border-radius: 16px;
-            color: #FFFFFF;
+            color: var(--gray-900);
             font-size: 16px;
             font-family: 'Outfit', sans-serif;
             font-weight: 500;
-            backdrop-filter: blur(10px);
             transition: all 0.3s ease;
         }
 
         .email-input:focus {
             outline: none;
-            border-color: var(--gold);
-            background: rgba(255, 255, 255, 0.08);
-            box-shadow: 0 0 0 4px rgba(245, 158, 11, 0.1);
+            border-color: var(--violet);
+            box-shadow: 0 0 0 4px rgba(124, 58, 237, 0.1);
         }
 
         .email-input::placeholder {
-            color: rgba(255, 255, 255, 0.4);
+            color: var(--gray-600);
         }
 
         .submit-btn {
             padding: 20px 48px;
-            background: linear-gradient(135deg, var(--violet-primary) 0%, var(--gold) 100%);
+            background: linear-gradient(135deg, var(--violet) 0%, var(--violet-dark) 100%);
             border: none;
             border-radius: 16px;
-            color: #FFFFFF;
+            color: var(--white);
             font-size: 16px;
             font-weight: 800;
             font-family: 'Outfit', sans-serif;
             cursor: pointer;
             transition: all 0.3s ease;
-            box-shadow: 0 10px 30px rgba(124, 58, 237, 0.3);
+            box-shadow: 0 10px 30px rgba(124, 58, 237, 0.2);
             text-transform: uppercase;
             letter-spacing: 1px;
         }
 
         .submit-btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 15px 40px rgba(245, 158, 11, 0.4);
+            box-shadow: 0 15px 40px rgba(124, 58, 237, 0.3);
         }
 
         .hero-note {
             font-size: 14px;
-            color: rgba(255, 255, 255, 0.5);
+            color: var(--gray-600);
             display: flex;
             align-items: center;
             gap: 8px;
@@ -275,45 +218,18 @@
         }
 
         @keyframes fadeInRight {
-            from {
-                opacity: 0;
-                transform: translateX(40px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
+            from { opacity: 0; transform: translateX(40px); }
+            to { opacity: 1; transform: translateX(0); }
         }
 
         .visual-card {
-            background: linear-gradient(135deg, rgba(124, 58, 237, 0.2) 0%, rgba(26, 21, 64, 0.6) 100%);
-            border: 1px solid rgba(167, 139, 250, 0.2);
+            background: linear-gradient(135deg, rgba(124, 58, 237, 0.05) 0%, rgba(245, 158, 11, 0.05) 100%);
+            border: 2px solid var(--violet-light);
             border-radius: 32px;
             padding: 48px;
-            backdrop-filter: blur(20px);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .visual-card::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            right: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(245, 158, 11, 0.1) 0%, transparent 70%);
-            animation: rotate 20s linear infinite;
-        }
-
-        @keyframes rotate {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
         }
 
         .stat {
-            position: relative;
-            z-index: 2;
             margin-bottom: 40px;
         }
 
@@ -325,7 +241,7 @@
             font-family: 'Playfair Display', serif;
             font-size: 64px;
             font-weight: 900;
-            background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 100%);
+            background: linear-gradient(135deg, var(--violet) 0%, var(--gold) 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -335,14 +251,14 @@
 
         .stat-label {
             font-size: 18px;
-            color: rgba(255, 255, 255, 0.7);
+            color: var(--gray-700);
             font-weight: 600;
         }
 
         /* Features Section */
         .features {
             padding: 120px 48px;
-            position: relative;
+            background: var(--gray-50);
         }
 
         .features-container {
@@ -361,15 +277,12 @@
             font-weight: 900;
             letter-spacing: -2px;
             margin-bottom: 24px;
-            background: linear-gradient(135deg, #FFFFFF 0%, var(--violet-light) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            color: var(--gray-900);
         }
 
         .section-subtitle {
             font-size: 20px;
-            color: rgba(255, 255, 255, 0.6);
+            color: var(--gray-600);
             max-width: 600px;
             margin: 0 auto;
         }
@@ -381,35 +294,17 @@
         }
 
         .feature-card {
-            background: linear-gradient(135deg, rgba(124, 58, 237, 0.1) 0%, rgba(26, 21, 64, 0.4) 100%);
-            border: 1px solid rgba(167, 139, 250, 0.15);
+            background: var(--white);
+            border: 2px solid var(--gray-100);
             border-radius: 24px;
             padding: 48px 36px;
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .feature-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: linear-gradient(90deg, var(--violet-primary) 0%, var(--gold) 100%);
-            transform: scaleX(0);
-            transition: transform 0.4s ease;
         }
 
         .feature-card:hover {
             transform: translateY(-12px);
-            border-color: rgba(245, 158, 11, 0.4);
-            box-shadow: 0 30px 60px rgba(124, 58, 237, 0.3);
-        }
-
-        .feature-card:hover::before {
-            transform: scaleX(1);
+            border-color: var(--violet-light);
+            box-shadow: 0 30px 60px rgba(124, 58, 237, 0.15);
         }
 
         .feature-icon {
@@ -422,47 +317,35 @@
             font-size: 24px;
             font-weight: 800;
             margin-bottom: 16px;
-            color: #FFFFFF;
+            color: var(--gray-900);
         }
 
         .feature-desc {
             font-size: 16px;
             line-height: 1.7;
-            color: rgba(255, 255, 255, 0.7);
+            color: var(--gray-600);
+        }
+
+        /* About Section */
+        .about {
+            padding: 120px 48px;
+            background: var(--white);
         }
 
         /* CTA Section */
         .cta {
             padding: 120px 48px;
-            position: relative;
+            background: var(--gray-50);
         }
 
         .cta-container {
             max-width: 1400px;
             margin: 0 auto;
-            background: linear-gradient(135deg, rgba(124, 58, 237, 0.2) 0%, rgba(245, 158, 11, 0.1) 100%);
-            border: 1px solid rgba(167, 139, 250, 0.3);
+            background: linear-gradient(135deg, rgba(124, 58, 237, 0.08) 0%, rgba(245, 158, 11, 0.08) 100%);
+            border: 2px solid var(--violet-light);
             border-radius: 32px;
             padding: 80px 64px;
             text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .cta-container::before {
-            content: '';
-            position: absolute;
-            top: -100%;
-            left: -100%;
-            width: 300%;
-            height: 300%;
-            background: radial-gradient(circle, rgba(245, 158, 11, 0.15) 0%, transparent 50%);
-            animation: rotate 30s linear infinite;
-        }
-
-        .cta-content {
-            position: relative;
-            z-index: 2;
         }
 
         .cta h2 {
@@ -470,15 +353,12 @@
             font-size: 56px;
             font-weight: 900;
             margin-bottom: 24px;
-            background: linear-gradient(135deg, #FFFFFF 0%, var(--gold-light) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            color: var(--gray-900);
         }
 
         .cta p {
             font-size: 20px;
-            color: rgba(255, 255, 255, 0.7);
+            color: var(--gray-600);
             margin-bottom: 48px;
             max-width: 700px;
             margin-left: auto;
@@ -488,7 +368,8 @@
         /* Footer */
         footer {
             padding: 48px;
-            border-top: 1px solid rgba(167, 139, 250, 0.1);
+            border-top: 2px solid var(--gray-100);
+            background: var(--white);
         }
 
         .footer-container {
@@ -500,7 +381,7 @@
         }
 
         .footer-text {
-            color: rgba(255, 255, 255, 0.5);
+            color: var(--gray-600);
             font-size: 14px;
         }
 
@@ -510,7 +391,7 @@
         }
 
         .footer-links a {
-            color: rgba(255, 255, 255, 0.6);
+            color: var(--gray-600);
             text-decoration: none;
             font-size: 14px;
             font-weight: 600;
@@ -518,7 +399,7 @@
         }
 
         .footer-links a:hover {
-            color: var(--gold);
+            color: var(--violet);
         }
 
         /* Responsive */
@@ -527,37 +408,28 @@
                 grid-template-columns: 1fr;
                 gap: 60px;
             }
-
             .hero h1 {
                 font-size: 64px;
             }
-
             .features-grid {
                 grid-template-columns: repeat(2, 1fr);
             }
         }
 
         @media (max-width: 768px) {
-            .header-container,
-            .hero,
-            .features,
-            .cta {
+            .header-container, .hero, .features, .cta {
                 padding-left: 24px;
                 padding-right: 24px;
             }
-
             .hero h1 {
                 font-size: 48px;
             }
-
             .features-grid {
                 grid-template-columns: 1fr;
             }
-
             .email-form {
                 flex-direction: column;
             }
-
             nav {
                 display: none;
             }
@@ -565,192 +437,153 @@
     </style>
 </head>
 <body>
-    <div class="content-wrapper">
-        <!-- Header -->
-        <header>
-            <div class="header-container">
-                <a href="#home" style="display: inline-block;">
-                    <img src="logo.png" alt="TreasureX" class="logo-img">
-                </a>
-                <nav>
-                    <a href="#features">Features</a>
-                    <a href="#about">About</a>
-                    <a href="#contact">Contact</a>
-                </nav>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <a href="#home">
+                <img src="logo.png" alt="TreasureX" class="logo-img">
+            </a>
+            <nav>
+                <a href="#features">Features</a>
+                <a href="#about">About</a>
+                <a href="#contact">Contact</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-grid">
+            <div class="hero-content">
+                <div class="hero-badge">✨ Coming Soon to iOS & Android</div>
+                <h1>Turn Your City Into An Adventure</h1>
+                <p class="hero-subtitle">Premium scavenger hunt experiences that transform ordinary places into extraordinary adventures. Play with teams, complete missions, and compete for glory.</p>
+
+                <form class="email-form" onsubmit="handleSubmit(event)">
+                    <input type="email" class="email-input" placeholder="your@email.com" required>
+                    <button type="submit" class="submit-btn">Notify Me</button>
+                </form>
+
+                <p class="hero-note">🚀 Be the first to know when we launch</p>
             </div>
-        </header>
 
-        <!-- Hero Section -->
-        <section class="hero" id="home">
-            <div class="hero-grid">
-                <div class="hero-content">
-                    <div class="hero-badge">✨ Coming Soon to iOS & Android</div>
-                    <h1>Turn Your City Into An Adventure</h1>
-                    <p class="hero-subtitle">Premium scavenger hunt experiences that transform ordinary places into extraordinary adventures. Play with teams, complete missions, and compete for glory.</p>
-
-                    <form class="email-form" onsubmit="handleSubmit(event)">
-                        <input type="email" class="email-input" placeholder="your@email.com" required>
-                        <button type="submit" class="submit-btn">Notify Me</button>
-                    </form>
-
-                    <p class="hero-note">🚀 Be the first to know when we launch</p>
-                </div>
-
-                <div class="hero-visual">
-                    <div class="visual-card">
-                        <div class="stat">
-                            <div class="stat-number">10K+</div>
-                            <div class="stat-label">Active Players</div>
-                        </div>
-                        <div class="stat">
-                            <div class="stat-number">500+</div>
-                            <div class="stat-label">Adventures Created</div>
-                        </div>
-                        <div class="stat">
-                            <div class="stat-number">98%</div>
-                            <div class="stat-label">Satisfaction Rate</div>
-                        </div>
+            <div class="hero-visual">
+                <div class="visual-card">
+                    <div class="stat">
+                        <div class="stat-number">10K+</div>
+                        <div class="stat-label">Active Players</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number">500+</div>
+                        <div class="stat-label">Adventures Created</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number">98%</div>
+                        <div class="stat-label">Satisfaction Rate</div>
                     </div>
                 </div>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <!-- Features Section -->
-        <section class="features" id="features">
-            <div class="features-container">
-                <div class="section-header">
-                    <h2 class="section-title">Premium Features</h2>
-                    <p class="section-subtitle">Everything you need to create unforgettable adventures</p>
+    <!-- Features Section -->
+    <section class="features" id="features">
+        <div class="features-container">
+            <div class="section-header">
+                <h2 class="section-title">Premium Features</h2>
+                <p class="section-subtitle">Everything you need to create unforgettable adventures</p>
+            </div>
+
+            <div class="features-grid">
+                <div class="feature-card">
+                    <span class="feature-icon">🎯</span>
+                    <h3 class="feature-title">GPS Missions</h3>
+                    <p class="feature-desc">Navigate to secret locations and unlock hidden challenges across your city</p>
                 </div>
 
-                <div class="features-grid">
-                    <div class="feature-card">
-                        <span class="feature-icon">🎯</span>
-                        <h3 class="feature-title">GPS Missions</h3>
-                        <p class="feature-desc">Navigate to secret locations and unlock hidden challenges across your city</p>
-                    </div>
+                <div class="feature-card">
+                    <span class="feature-icon">📸</span>
+                    <h3 class="feature-title">Photo & Video Challenges</h3>
+                    <p class="feature-desc">Capture creative moments and submit proof of your adventures</p>
+                </div>
 
-                    <div class="feature-card">
-                        <span class="feature-icon">📸</span>
-                        <h3 class="feature-title">Photo & Video Challenges</h3>
-                        <p class="feature-desc">Capture creative moments and submit proof of your adventures</p>
-                    </div>
+                <div class="feature-card">
+                    <span class="feature-icon">👥</span>
+                    <h3 class="feature-title">Team Competition</h3>
+                    <p class="feature-desc">Collaborate with teammates and compete against rivals in real-time</p>
+                </div>
 
-                    <div class="feature-card">
-                        <span class="feature-icon">👥</span>
-                        <h3 class="feature-title">Team Competition</h3>
-                        <p class="feature-desc">Collaborate with teammates and compete against rivals in real-time</p>
-                    </div>
+                <div class="feature-card">
+                    <span class="feature-icon">🏆</span>
+                    <h3 class="feature-title">Live Leaderboards</h3>
+                    <p class="feature-desc">Track your progress and see how you stack up against other teams</p>
+                </div>
 
-                    <div class="feature-card">
-                        <span class="feature-icon">🏆</span>
-                        <h3 class="feature-title">Live Leaderboards</h3>
-                        <p class="feature-desc">Track your progress and see how you stack up against other teams</p>
-                    </div>
+                <div class="feature-card">
+                    <span class="feature-icon">⚡</span>
+                    <h3 class="feature-title">Real-time Updates</h3>
+                    <p class="feature-desc">Get instant notifications and live updates as the game unfolds</p>
+                </div>
 
-                    <div class="feature-card">
-                        <span class="feature-icon">⚡</span>
-                        <h3 class="feature-title">Real-time Updates</h3>
-                        <p class="feature-desc">Get instant notifications and live updates as the game unfolds</p>
-                    </div>
-
-                    <div class="feature-card">
-                        <span class="feature-icon">🎨</span>
-                        <h3 class="feature-title">Custom Experiences</h3>
-                        <p class="feature-desc">Create your own adventures with our powerful experience builder</p>
-                    </div>
+                <div class="feature-card">
+                    <span class="feature-icon">🎨</span>
+                    <h3 class="feature-title">Custom Experiences</h3>
+                    <p class="feature-desc">Create your own adventures with our powerful experience builder</p>
                 </div>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <!-- About Section -->
-        <section class="features" id="about" style="padding-top: 80px; padding-bottom: 80px;">
-            <div class="features-container">
-                <div class="section-header">
-                    <h2 class="section-title">About TreasureX</h2>
-                    <p class="section-subtitle" style="max-width: 800px;">We're transforming how people experience their cities through premium, immersive scavenger hunt adventures. Our platform combines cutting-edge technology with real-world exploration to create unforgettable team experiences.</p>
-                </div>
+    <!-- About Section -->
+    <section class="about" id="about">
+        <div class="features-container">
+            <div class="section-header">
+                <h2 class="section-title">About TreasureX</h2>
+                <p class="section-subtitle" style="max-width: 800px;">We're transforming how people experience their cities through premium, immersive scavenger hunt adventures. Our platform combines cutting-edge technology with real-world exploration to create unforgettable team experiences.</p>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <!-- CTA Section -->
-        <section class="cta" id="contact">
-            <div class="cta-container">
-                <div class="cta-content">
-                    <h2>Ready to Start Your Adventure?</h2>
-                    <p>Join thousands of players exploring their cities in exciting new ways. Sign up to be notified when we launch.</p>
+    <!-- CTA Section -->
+    <section class="cta" id="contact">
+        <div class="cta-container">
+            <h2>Ready to Start Your Adventure?</h2>
+            <p>Join thousands of players exploring their cities in exciting new ways. Sign up to be notified when we launch.</p>
 
-                    <form class="email-form" onsubmit="handleSubmit(event)" style="max-width: 600px; margin: 0 auto;">
-                        <input type="email" class="email-input" placeholder="your@email.com" required>
-                        <button type="submit" class="submit-btn">Get Early Access</button>
-                    </form>
-                </div>
+            <form class="email-form" onsubmit="handleSubmit(event)" style="max-width: 600px; margin: 0 auto;">
+                <input type="email" class="email-input" placeholder="your@email.com" required>
+                <button type="submit" class="submit-btn">Get Early Access</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-container">
+            <p class="footer-text">© 2026 TreasureX. All rights reserved.</p>
+            <div class="footer-links">
+                <a href="#privacy">Privacy</a>
+                <a href="#terms">Terms</a>
+                <a href="#contact">Contact</a>
             </div>
-        </section>
-
-        <!-- Footer -->
-        <footer>
-            <div class="footer-container">
-                <p class="footer-text">© 2026 TreasureX. All rights reserved.</p>
-                <div class="footer-links">
-                    <a href="#privacy">Privacy</a>
-                    <a href="#terms">Terms</a>
-                    <a href="#contact">Contact</a>
-                </div>
-            </div>
-        </footer>
-    </div>
+        </div>
+    </footer>
 
     <script>
         function handleSubmit(event) {
             event.preventDefault();
             const input = event.target.querySelector('input[type="email"]');
-            const email = input.value;
-
-            // Show success message
             const btn = event.target.querySelector('button');
             const originalText = btn.textContent;
             btn.textContent = '✓ Subscribed!';
             btn.style.background = 'linear-gradient(135deg, #10B981 0%, #059669 100%)';
 
-            // Reset after 3 seconds
             setTimeout(() => {
                 btn.textContent = originalText;
                 btn.style.background = '';
                 input.value = '';
             }, 3000);
         }
-
-        // Parallax effect on scroll
-        window.addEventListener('scroll', () => {
-            const scrolled = window.pageYOffset;
-            const parallaxElements = document.querySelectorAll('.hero-visual');
-            parallaxElements.forEach(el => {
-                el.style.transform = `translateY(${scrolled * 0.3}px)`;
-            });
-        });
-
-        // Intersection Observer for animations
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -100px 0px'
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach((entry, index) => {
-                if (entry.isIntersecting) {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
-                }
-            });
-        }, observerOptions);
-
-        document.querySelectorAll('.feature-card').forEach((card, index) => {
-            card.style.opacity = '0';
-            card.style.transform = 'translateY(30px)';
-            card.style.transition = `all 0.6s ease ${index * 0.1}s`;
-            observer.observe(card);
-        });
     </script>
 </body>
 </html>
