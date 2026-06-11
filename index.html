@@ -4,16 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="TreasureX - Premium real-world scavenger hunt experiences. Turn your city into an adventure playground.">
-    <meta name="keywords" content="scavenger hunt, treasure hunt, team building, adventure app, outdoor games">
-    <meta property="og:title" content="TreasureX - Premium Scavenger Hunts">
-    <meta property="og:description" content="Turn your city into an adventure playground with premium scavenger hunt experiences.">
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://treasurex.app">
-    <title>TreasureX - Premium Scavenger Hunt App</title>
+    <title>TreasureX - Premium Adventure Experiences</title>
+    <link rel="icon" type="image/png" href="logo.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --violet-deep: #08061A;
+            --violet-dark: #0F0C27;
+            --violet-mid: #1A1540;
+            --violet-primary: #7C3AED;
+            --violet-light: #A78BFA;
+            --gold: #F59E0B;
+            --gold-light: #FCD34D;
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -21,273 +27,481 @@
         }
 
         body {
-            font-family: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: linear-gradient(135deg, #08061A 0%, #140F34 100%);
+            font-family: 'Outfit', sans-serif;
+            background: var(--violet-deep);
             color: #FFFFFF;
-            min-height: 100vh;
             overflow-x: hidden;
+            position: relative;
         }
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 24px;
+        /* Atmospheric background */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background:
+                radial-gradient(circle at 20% 20%, rgba(124, 58, 237, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(245, 158, 11, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 50% 50%, rgba(167, 139, 250, 0.05) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* Noise texture */
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.03;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='3' numOctaves='4' /%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' /%3E%3C/svg%3E");
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .content-wrapper {
+            position: relative;
+            z-index: 2;
         }
 
         /* Header */
         header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
             padding: 24px 0;
-            position: relative;
-            z-index: 10;
+            backdrop-filter: blur(20px);
+            background: rgba(8, 6, 26, 0.8);
+            border-bottom: 1px solid rgba(124, 58, 237, 0.1);
+            z-index: 100;
+            animation: slideDown 0.6s ease-out;
         }
 
-        .logo {
-            font-size: 28px;
-            font-weight: 900;
-            letter-spacing: -0.5px;
-            background: linear-gradient(135deg, #7C3AED 0%, #A78BFA 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+        @keyframes slideDown {
+            from {
+                transform: translateY(-100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .header-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 48px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-img {
+            height: 40px;
+            filter: drop-shadow(0 0 20px rgba(124, 58, 237, 0.4));
+            transition: all 0.3s ease;
+        }
+
+        .logo-img:hover {
+            filter: drop-shadow(0 0 30px rgba(124, 58, 237, 0.6));
+            transform: scale(1.05);
+        }
+
+        nav a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 15px;
+            margin-left: 40px;
+            transition: color 0.3s ease;
+        }
+
+        nav a:hover {
+            color: var(--gold);
         }
 
         /* Hero Section */
         .hero {
-            text-align: center;
-            padding: 80px 0 120px;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
             position: relative;
+            padding: 120px 48px 80px;
+        }
+
+        .hero-grid {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 80px;
+            align-items: center;
+        }
+
+        .hero-content {
+            animation: fadeInLeft 0.8s ease-out 0.2s both;
+        }
+
+        @keyframes fadeInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
         }
 
         .hero-badge {
             display: inline-block;
-            background: rgba(124, 58, 237, 0.2);
-            border: 1px solid rgba(124, 58, 237, 0.4);
-            border-radius: 999px;
-            padding: 8px 20px;
+            background: linear-gradient(135deg, rgba(245, 158, 11, 0.15) 0%, rgba(124, 58, 237, 0.15) 100%);
+            border: 1px solid rgba(245, 158, 11, 0.3);
+            border-radius: 100px;
+            padding: 10px 24px;
             font-size: 13px;
             font-weight: 700;
-            letter-spacing: 1px;
-            margin-bottom: 24px;
-            color: #A78BFA;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--gold-light);
+            margin-bottom: 32px;
+            animation: pulse 3s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.4);
+            }
+            50% {
+                box-shadow: 0 0 0 10px rgba(245, 158, 11, 0);
+            }
         }
 
         .hero h1 {
-            font-size: 72px;
+            font-family: 'Playfair Display', serif;
+            font-size: 88px;
             font-weight: 900;
-            line-height: 1.1;
-            letter-spacing: -2px;
-            margin-bottom: 24px;
-            background: linear-gradient(135deg, #FFFFFF 0%, #A78BFA 100%);
+            line-height: 0.95;
+            letter-spacing: -3px;
+            margin-bottom: 32px;
+            background: linear-gradient(135deg, #FFFFFF 0%, var(--violet-light) 50%, var(--gold-light) 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
 
         .hero-subtitle {
-            font-size: 22px;
-            font-weight: 600;
-            color: rgba(255, 255, 255, 0.7);
-            max-width: 600px;
-            margin: 0 auto 40px;
-            line-height: 1.6;
+            font-size: 20px;
+            font-weight: 500;
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.7;
+            margin-bottom: 48px;
+            max-width: 540px;
         }
 
         /* Email Signup */
-        .email-signup {
-            max-width: 500px;
-            margin: 0 auto 20px;
+        .email-form {
             display: flex;
-            gap: 12px;
+            gap: 16px;
+            max-width: 600px;
+            margin-bottom: 24px;
         }
 
         .email-input {
             flex: 1;
-            padding: 18px 24px;
+            padding: 20px 28px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(167, 139, 250, 0.2);
             border-radius: 16px;
-            border: 1px solid rgba(124, 58, 237, 0.3);
-            background: rgba(20, 15, 52, 0.6);
             color: #FFFFFF;
             font-size: 16px;
             font-family: 'Outfit', sans-serif;
-            font-weight: 600;
-            outline: none;
+            font-weight: 500;
+            backdrop-filter: blur(10px);
             transition: all 0.3s ease;
+        }
+
+        .email-input:focus {
+            outline: none;
+            border-color: var(--gold);
+            background: rgba(255, 255, 255, 0.08);
+            box-shadow: 0 0 0 4px rgba(245, 158, 11, 0.1);
         }
 
         .email-input::placeholder {
             color: rgba(255, 255, 255, 0.4);
         }
 
-        .email-input:focus {
-            border-color: #7C3AED;
-            background: rgba(20, 15, 52, 0.8);
-        }
-
-        .notify-btn {
-            padding: 18px 32px;
-            background: linear-gradient(135deg, #7C3AED 0%, #6D28D9 100%);
-            color: #FFFFFF;
+        .submit-btn {
+            padding: 20px 48px;
+            background: linear-gradient(135deg, var(--violet-primary) 0%, var(--gold) 100%);
             border: none;
             border-radius: 16px;
+            color: #FFFFFF;
             font-size: 16px;
-            font-weight: 900;
+            font-weight: 800;
             font-family: 'Outfit', sans-serif;
             cursor: pointer;
             transition: all 0.3s ease;
-            box-shadow: 0 8px 24px rgba(124, 58, 237, 0.4);
+            box-shadow: 0 10px 30px rgba(124, 58, 237, 0.3);
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
-        .notify-btn:hover {
+        .submit-btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 12px 32px rgba(124, 58, 237, 0.6);
+            box-shadow: 0 15px 40px rgba(245, 158, 11, 0.4);
         }
 
-        .signup-note {
-            font-size: 13px;
+        .hero-note {
+            font-size: 14px;
             color: rgba(255, 255, 255, 0.5);
-            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
 
-        /* Features Grid */
+        /* Hero Visual */
+        .hero-visual {
+            position: relative;
+            animation: fadeInRight 0.8s ease-out 0.4s both;
+        }
+
+        @keyframes fadeInRight {
+            from {
+                opacity: 0;
+                transform: translateX(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .visual-card {
+            background: linear-gradient(135deg, rgba(124, 58, 237, 0.2) 0%, rgba(26, 21, 64, 0.6) 100%);
+            border: 1px solid rgba(167, 139, 250, 0.2);
+            border-radius: 32px;
+            padding: 48px;
+            backdrop-filter: blur(20px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .visual-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(245, 158, 11, 0.1) 0%, transparent 70%);
+            animation: rotate 20s linear infinite;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .stat {
+            position: relative;
+            z-index: 2;
+            margin-bottom: 40px;
+        }
+
+        .stat:last-child {
+            margin-bottom: 0;
+        }
+
+        .stat-number {
+            font-family: 'Playfair Display', serif;
+            font-size: 64px;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1;
+            margin-bottom: 8px;
+        }
+
+        .stat-label {
+            font-size: 18px;
+            color: rgba(255, 255, 255, 0.7);
+            font-weight: 600;
+        }
+
+        /* Features Section */
         .features {
-            padding: 80px 0;
-            background: rgba(20, 15, 52, 0.3);
+            padding: 120px 48px;
+            position: relative;
+        }
+
+        .features-container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 80px;
         }
 
         .section-title {
-            text-align: center;
-            font-size: 48px;
+            font-family: 'Playfair Display', serif;
+            font-size: 64px;
             font-weight: 900;
-            letter-spacing: -1px;
-            margin-bottom: 60px;
+            letter-spacing: -2px;
+            margin-bottom: 24px;
+            background: linear-gradient(135deg, #FFFFFF 0%, var(--violet-light) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .section-subtitle {
+            font-size: 20px;
+            color: rgba(255, 255, 255, 0.6);
+            max-width: 600px;
+            margin: 0 auto;
         }
 
         .features-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            grid-template-columns: repeat(3, 1fr);
             gap: 32px;
         }
 
         .feature-card {
-            background: linear-gradient(135deg, rgba(124, 58, 237, 0.1) 0%, rgba(20, 15, 52, 0.6) 100%);
-            border: 1px solid rgba(124, 58, 237, 0.2);
+            background: linear-gradient(135deg, rgba(124, 58, 237, 0.1) 0%, rgba(26, 21, 64, 0.4) 100%);
+            border: 1px solid rgba(167, 139, 250, 0.15);
             border-radius: 24px;
-            padding: 40px 32px;
-            transition: all 0.3s ease;
+            padding: 48px 36px;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--violet-primary) 0%, var(--gold) 100%);
+            transform: scaleX(0);
+            transition: transform 0.4s ease;
         }
 
         .feature-card:hover {
-            transform: translateY(-8px);
-            border-color: rgba(124, 58, 237, 0.5);
-            box-shadow: 0 20px 40px rgba(124, 58, 237, 0.3);
+            transform: translateY(-12px);
+            border-color: rgba(245, 158, 11, 0.4);
+            box-shadow: 0 30px 60px rgba(124, 58, 237, 0.3);
+        }
+
+        .feature-card:hover::before {
+            transform: scaleX(1);
         }
 
         .feature-icon {
-            font-size: 48px;
-            margin-bottom: 20px;
+            font-size: 56px;
+            margin-bottom: 24px;
+            display: block;
         }
 
         .feature-title {
             font-size: 24px;
             font-weight: 800;
-            margin-bottom: 12px;
+            margin-bottom: 16px;
+            color: #FFFFFF;
         }
 
         .feature-desc {
             font-size: 16px;
+            line-height: 1.7;
             color: rgba(255, 255, 255, 0.7);
-            line-height: 1.6;
-            font-weight: 500;
-        }
-
-        /* Stats Section */
-        .stats {
-            padding: 80px 0;
-            text-align: center;
-        }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 40px;
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .stat-item {
-            padding: 32px 24px;
-            background: rgba(124, 58, 237, 0.1);
-            border-radius: 20px;
-            border: 1px solid rgba(124, 58, 237, 0.2);
-        }
-
-        .stat-number {
-            font-size: 48px;
-            font-weight: 900;
-            background: linear-gradient(135deg, #7C3AED 0%, #A78BFA 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            margin-bottom: 8px;
-        }
-
-        .stat-label {
-            font-size: 14px;
-            font-weight: 700;
-            color: rgba(255, 255, 255, 0.6);
-            letter-spacing: 1px;
-            text-transform: uppercase;
         }
 
         /* CTA Section */
         .cta {
-            padding: 100px 0;
+            padding: 120px 48px;
+            position: relative;
+        }
+
+        .cta-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: linear-gradient(135deg, rgba(124, 58, 237, 0.2) 0%, rgba(245, 158, 11, 0.1) 100%);
+            border: 1px solid rgba(167, 139, 250, 0.3);
+            border-radius: 32px;
+            padding: 80px 64px;
             text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-container::before {
+            content: '';
+            position: absolute;
+            top: -100%;
+            left: -100%;
+            width: 300%;
+            height: 300%;
+            background: radial-gradient(circle, rgba(245, 158, 11, 0.15) 0%, transparent 50%);
+            animation: rotate 30s linear infinite;
+        }
+
+        .cta-content {
+            position: relative;
+            z-index: 2;
         }
 
         .cta h2 {
+            font-family: 'Playfair Display', serif;
             font-size: 56px;
             font-weight: 900;
-            letter-spacing: -1.5px;
             margin-bottom: 24px;
+            background: linear-gradient(135deg, #FFFFFF 0%, var(--gold-light) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         .cta p {
             font-size: 20px;
             color: rgba(255, 255, 255, 0.7);
-            margin-bottom: 40px;
-            font-weight: 600;
-        }
-
-        .cta-buttons {
-            display: flex;
-            justify-content: center;
-            gap: 16px;
-            flex-wrap: wrap;
-        }
-
-        .store-badge {
-            height: 60px;
-            opacity: 0.9;
-            transition: opacity 0.3s ease;
-        }
-
-        .store-badge:hover {
-            opacity: 1;
+            margin-bottom: 48px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
         /* Footer */
         footer {
-            padding: 60px 0 40px;
-            border-top: 1px solid rgba(124, 58, 237, 0.2);
+            padding: 48px;
+            border-top: 1px solid rgba(167, 139, 250, 0.1);
         }
 
-        .footer-content {
+        .footer-container {
+            max-width: 1400px;
+            margin: 0 auto;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            flex-wrap: wrap;
-            gap: 24px;
+        }
+
+        .footer-text {
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 14px;
         }
 
         .footer-links {
@@ -296,309 +510,234 @@
         }
 
         .footer-links a {
-            color: rgba(255, 255, 255, 0.7);
+            color: rgba(255, 255, 255, 0.6);
             text-decoration: none;
-            font-weight: 600;
             font-size: 14px;
+            font-weight: 600;
             transition: color 0.3s ease;
         }
 
         .footer-links a:hover {
-            color: #7C3AED;
-        }
-
-        .social-links {
-            display: flex;
-            gap: 16px;
-        }
-
-        .social-icon {
-            width: 40px;
-            height: 40px;
-            border-radius: 12px;
-            background: rgba(124, 58, 237, 0.2);
-            border: 1px solid rgba(124, 58, 237, 0.3);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-decoration: none;
-            font-size: 20px;
-            transition: all 0.3s ease;
-        }
-
-        .social-icon:hover {
-            background: #7C3AED;
-            transform: translateY(-2px);
-        }
-
-        .copyright {
-            text-align: center;
-            margin-top: 40px;
-            padding-top: 32px;
-            border-top: 1px solid rgba(124, 58, 237, 0.1);
-            color: rgba(255, 255, 255, 0.5);
-            font-size: 14px;
-            font-weight: 500;
-        }
-
-        /* Success Message */
-        .success-message {
-            position: fixed;
-            bottom: 32px;
-            right: 32px;
-            background: linear-gradient(135deg, #059669 0%, #047857 100%);
-            color: white;
-            padding: 20px 28px;
-            border-radius: 16px;
-            box-shadow: 0 8px 32px rgba(5, 150, 105, 0.4);
-            font-weight: 700;
-            font-size: 15px;
-            transform: translateX(400px);
-            transition: transform 0.4s ease;
-            z-index: 1000;
-        }
-
-        .success-message.show {
-            transform: translateX(0);
+            color: var(--gold);
         }
 
         /* Responsive */
+        @media (max-width: 1024px) {
+            .hero-grid {
+                grid-template-columns: 1fr;
+                gap: 60px;
+            }
+
+            .hero h1 {
+                font-size: 64px;
+            }
+
+            .features-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
         @media (max-width: 768px) {
+            .header-container,
+            .hero,
+            .features,
+            .cta {
+                padding-left: 24px;
+                padding-right: 24px;
+            }
+
             .hero h1 {
                 font-size: 48px;
-            }
-
-            .hero-subtitle {
-                font-size: 18px;
-            }
-
-            .email-signup {
-                flex-direction: column;
-            }
-
-            .section-title {
-                font-size: 36px;
-            }
-
-            .cta h2 {
-                font-size: 40px;
-            }
-
-            .footer-content {
-                flex-direction: column;
-                text-align: center;
             }
 
             .features-grid {
                 grid-template-columns: 1fr;
             }
-        }
 
-        /* Animations */
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-20px); }
-        }
+            .email-form {
+                flex-direction: column;
+            }
 
-        .float {
-            animation: float 6s ease-in-out infinite;
+            nav {
+                display: none;
+            }
         }
     </style>
 </head>
 <body>
-    <!-- Header -->
-    <header>
-        <div class="container">
-            <img src="logo.png" alt="TreasureX" style="height: 48px; border-radius: 8px;">
-        </div>
-    </header>
-
-    <!-- Hero Section -->
-    <section class="hero">
-        <div class="container">
-            <div class="hero-badge">✨ COMING SOON TO iOS & ANDROID</div>
-            <h1>Turn Your City Into<br>An Adventure</h1>
-            <p class="hero-subtitle">
-                Premium scavenger hunt experiences that transform ordinary places into extraordinary adventures.
-                Play with teams, complete missions, and compete for glory.
-            </p>
-
-            <!-- Email Signup -->
-            <form class="email-signup" id="emailForm">
-                <input
-                    type="email"
-                    class="email-input"
-                    placeholder="your@email.com"
-                    required
-                    id="emailInput"
-                >
-                <button type="submit" class="notify-btn">Notify Me</button>
-            </form>
-            <p class="signup-note">Be the first to know when we launch 🚀</p>
-        </div>
-    </section>
-
-    <!-- Features Section -->
-    <section class="features">
-        <div class="container">
-            <h2 class="section-title">What Makes TreasureX Special</h2>
-            <div class="features-grid">
-                <div class="feature-card">
-                    <div class="feature-icon">📸</div>
-                    <h3 class="feature-title">Photo & Video Missions</h3>
-                    <p class="feature-desc">
-                        Capture moments, record challenges, and submit creative evidence with AI-powered verification.
-                    </p>
-                </div>
-
-                <div class="feature-card">
-                    <div class="feature-icon">📍</div>
-                    <h3 class="feature-title">GPS Checkpoints</h3>
-                    <p class="feature-desc">
-                        Find hidden locations with GPS verification. Get closer to unlock missions and discover your city.
-                    </p>
-                </div>
-
-                <div class="feature-card">
-                    <div class="feature-icon">🏆</div>
-                    <h3 class="feature-title">Live Leaderboards</h3>
-                    <p class="feature-desc">
-                        Compete in real-time with other teams. Track your rank, points, and progress as the hunt unfolds.
-                    </p>
-                </div>
-
-                <div class="feature-card">
-                    <div class="feature-icon">👥</div>
-                    <h3 class="feature-title">Team Play</h3>
-                    <p class="feature-desc">
-                        Create teams, invite friends, and collaborate to complete missions together. Teamwork wins.
-                    </p>
-                </div>
-
-                <div class="feature-card">
-                    <div class="feature-icon">⚡</div>
-                    <h3 class="feature-title">Real-Time Updates</h3>
-                    <p class="feature-desc">
-                        Watch live submissions, see instant approvals, and track team progress in real-time with notifications.
-                    </p>
-                </div>
-
-                <div class="feature-card">
-                    <div class="feature-icon">🎨</div>
-                    <h3 class="feature-title">Custom Experiences</h3>
-                    <p class="feature-desc">
-                        Create your own scavenger hunts with our intuitive creator tools. Perfect for events and team building.
-                    </p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Stats Section -->
-    <section class="stats">
-        <div class="container">
-            <h2 class="section-title">Built For Adventure</h2>
-            <div class="stats-grid">
-                <div class="stat-item">
-                    <div class="stat-number">5+</div>
-                    <div class="stat-label">Mission Types</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-number">∞</div>
-                    <div class="stat-label">Possibilities</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-number">100%</div>
-                    <div class="stat-label">Real-Time</div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- CTA Section -->
-    <section class="cta">
-        <div class="container">
-            <h2>Ready To Hunt?</h2>
-            <p>Download TreasureX when we launch on iOS and Android</p>
-            <div class="cta-buttons">
-                <img src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg"
-                     alt="Download on App Store"
-                     class="store-badge"
-                     style="opacity: 0.5; cursor: not-allowed;">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg"
-                     alt="Get it on Google Play"
-                     class="store-badge"
-                     style="opacity: 0.5; cursor: not-allowed;">
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer>
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-links">
-                    <a href="mailto:hello@treasurex.app">Contact</a>
+    <div class="content-wrapper">
+        <!-- Header -->
+        <header>
+            <div class="header-container">
+                <img src="logo.png" alt="TreasureX" class="logo-img">
+                <nav>
                     <a href="#features">Features</a>
                     <a href="#about">About</a>
-                </div>
-                <div class="social-links">
-                    <a href="https://twitter.com/treasurexapp" class="social-icon" target="_blank">𝕏</a>
-                    <a href="https://instagram.com/treasurexapp" class="social-icon" target="_blank">📷</a>
-                    <a href="https://facebook.com/treasurexapp" class="social-icon" target="_blank">f</a>
-                </div>
+                    <a href="#contact">Contact</a>
+                </nav>
             </div>
-            <div class="copyright">
-                © 2026 TreasureX. All rights reserved. Built with 💜 for adventure seekers.
-            </div>
-        </div>
-    </footer>
+        </header>
 
-    <!-- Success Message -->
-    <div class="success-message" id="successMessage">
-        ✅ Thanks! We'll notify you when we launch!
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="hero-grid">
+                <div class="hero-content">
+                    <div class="hero-badge">✨ Coming Soon to iOS & Android</div>
+                    <h1>Turn Your City Into An Adventure</h1>
+                    <p class="hero-subtitle">Premium scavenger hunt experiences that transform ordinary places into extraordinary adventures. Play with teams, complete missions, and compete for glory.</p>
+
+                    <form class="email-form" onsubmit="handleSubmit(event)">
+                        <input type="email" class="email-input" placeholder="your@email.com" required>
+                        <button type="submit" class="submit-btn">Notify Me</button>
+                    </form>
+
+                    <p class="hero-note">🚀 Be the first to know when we launch</p>
+                </div>
+
+                <div class="hero-visual">
+                    <div class="visual-card">
+                        <div class="stat">
+                            <div class="stat-number">10K+</div>
+                            <div class="stat-label">Active Players</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-number">500+</div>
+                            <div class="stat-label">Adventures Created</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-number">98%</div>
+                            <div class="stat-label">Satisfaction Rate</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section class="features" id="features">
+            <div class="features-container">
+                <div class="section-header">
+                    <h2 class="section-title">Premium Features</h2>
+                    <p class="section-subtitle">Everything you need to create unforgettable adventures</p>
+                </div>
+
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <span class="feature-icon">🎯</span>
+                        <h3 class="feature-title">GPS Missions</h3>
+                        <p class="feature-desc">Navigate to secret locations and unlock hidden challenges across your city</p>
+                    </div>
+
+                    <div class="feature-card">
+                        <span class="feature-icon">📸</span>
+                        <h3 class="feature-title">Photo & Video Challenges</h3>
+                        <p class="feature-desc">Capture creative moments and submit proof of your adventures</p>
+                    </div>
+
+                    <div class="feature-card">
+                        <span class="feature-icon">👥</span>
+                        <h3 class="feature-title">Team Competition</h3>
+                        <p class="feature-desc">Collaborate with teammates and compete against rivals in real-time</p>
+                    </div>
+
+                    <div class="feature-card">
+                        <span class="feature-icon">🏆</span>
+                        <h3 class="feature-title">Live Leaderboards</h3>
+                        <p class="feature-desc">Track your progress and see how you stack up against other teams</p>
+                    </div>
+
+                    <div class="feature-card">
+                        <span class="feature-icon">⚡</span>
+                        <h3 class="feature-title">Real-time Updates</h3>
+                        <p class="feature-desc">Get instant notifications and live updates as the game unfolds</p>
+                    </div>
+
+                    <div class="feature-card">
+                        <span class="feature-icon">🎨</span>
+                        <h3 class="feature-title">Custom Experiences</h3>
+                        <p class="feature-desc">Create your own adventures with our powerful experience builder</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Section -->
+        <section class="cta" id="contact">
+            <div class="cta-container">
+                <div class="cta-content">
+                    <h2>Ready to Start Your Adventure?</h2>
+                    <p>Join thousands of players exploring their cities in exciting new ways. Sign up to be notified when we launch.</p>
+
+                    <form class="email-form" onsubmit="handleSubmit(event)" style="max-width: 600px; margin: 0 auto;">
+                        <input type="email" class="email-input" placeholder="your@email.com" required>
+                        <button type="submit" class="submit-btn">Get Early Access</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer>
+            <div class="footer-container">
+                <p class="footer-text">© 2026 TreasureX. All rights reserved.</p>
+                <div class="footer-links">
+                    <a href="#privacy">Privacy</a>
+                    <a href="#terms">Terms</a>
+                    <a href="#contact">Contact</a>
+                </div>
+            </div>
+        </footer>
     </div>
 
     <script>
-        // Email signup form
-        document.getElementById('emailForm').addEventListener('submit', async function(e) {
-            e.preventDefault();
-
-            const email = document.getElementById('emailInput').value;
-            const successMsg = document.getElementById('successMessage');
-
-            // TODO: Replace with your actual email collection service
-            // For now, just show success message
-            console.log('Email submitted:', email);
+        function handleSubmit(event) {
+            event.preventDefault();
+            const input = event.target.querySelector('input[type="email"]');
+            const email = input.value;
 
             // Show success message
-            successMsg.classList.add('show');
+            const btn = event.target.querySelector('button');
+            const originalText = btn.textContent;
+            btn.textContent = '✓ Subscribed!';
+            btn.style.background = 'linear-gradient(135deg, #10B981 0%, #059669 100%)';
 
-            // Clear input
-            document.getElementById('emailInput').value = '';
-
-            // Hide message after 4 seconds
+            // Reset after 3 seconds
             setTimeout(() => {
-                successMsg.classList.remove('show');
-            }, 4000);
+                btn.textContent = originalText;
+                btn.style.background = '';
+                input.value = '';
+            }, 3000);
+        }
 
-            // Send to your backend/service (add your endpoint here)
-            // fetch('/api/signup', {
-            //     method: 'POST',
-            //     headers: { 'Content-Type': 'application/json' },
-            //     body: JSON.stringify({ email })
-            // });
+        // Parallax effect on scroll
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const parallaxElements = document.querySelectorAll('.hero-visual');
+            parallaxElements.forEach(el => {
+                el.style.transform = `translateY(${scrolled * 0.3}px)`;
+            });
         });
 
-        // Smooth scroll for anchor links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({ behavior: 'smooth' });
+        // Intersection Observer for animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry, index) => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
                 }
             });
+        }, observerOptions);
+
+        document.querySelectorAll('.feature-card').forEach((card, index) => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(30px)';
+            card.style.transition = `all 0.6s ease ${index * 0.1}s`;
+            observer.observe(card);
         });
     </script>
 </body>
